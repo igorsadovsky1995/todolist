@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { AddTaskForm } from "../AddTaskForm/AddTaskForm"
 import { SearchTaskForm } from "../SearchTaskForm/SearchTaskForm"
 import { TodoInfo } from "../TodoInfo/TodoInfo"
@@ -7,18 +7,28 @@ import type { ITask } from "../TodoList/TodoList"
 
 export const Todo = () => {
 
-    const [tasks, setTasks] = useState<ITask[]>([
-        {
-            id: "task-1",
-            title: "task 1",
-            isDone: false
-        },
-        {
-            id: "task-2",
-            title: "task 2",
-            isDone: true
+    const [tasks, setTasks] = useState<ITask[]>(() => {
+        const savedTasks = localStorage.getItem('tasks')
+
+        if(savedTasks){
+            return JSON.parse(savedTasks)
         }
-    ])
+
+        return [
+            {
+                id: "task-1",
+                title: "task 1",
+                isDone: false
+            },
+            {
+                id: "task-2",
+                title: "task 2",
+                isDone: true
+            }
+        ]
+    })
+    
+    const [searchQuery, setSearchQuery] = useState<string>('')
 
     const [newTaskTitle, setNewTaskTitle] = useState('')
 
@@ -44,10 +54,6 @@ export const Todo = () => {
         }))
     }
 
-    const filterTask = (query: string) => {
-        console.log(`Search: ${query}`)
-    }
-
     const addTask = () => {
         if(newTaskTitle.trim().length > 0){
             const newTask: ITask = {
@@ -61,9 +67,20 @@ export const Todo = () => {
                 newTask
             ])
 
-            setNewTaskTitle("")
+            setNewTaskTitle("");
+            setSearchQuery("");
         }
     }
+
+    useEffect(() => {
+        localStorage.setItem('tasks', JSON.stringify(tasks))
+    }, [tasks])
+
+    const clearSearchQuery = searchQuery.trim().toLocaleLowerCase();
+
+    const filteredTasks = clearSearchQuery.length > 0 ? (
+        tasks.filter(({title}) => title.toLocaleLowerCase().includes(clearSearchQuery))
+    ) : null;
 
     return (
         <div className="todo">
@@ -74,7 +91,8 @@ export const Todo = () => {
                 setNewTaskTitle= {setNewTaskTitle}
             />
             <SearchTaskForm 
-                onSearchInput= {filterTask}
+                searchQuery= {searchQuery}
+                setSearchQuery= {setSearchQuery}
             />
             <TodoInfo 
                 total= {tasks.length}
@@ -82,6 +100,7 @@ export const Todo = () => {
                 onDeleteAllButtonClick = {deleteAllTasks}
             />
             <TodoList 
+                filteredTasks= {filteredTasks}
                 tasks= {tasks}
                 onDeleteTaskButtonClick= {deleteTask} 
                 onTaskCompleteChange= {toggleIsComplete}

@@ -1,12 +1,14 @@
 import { Field } from "../Field/Field"
 
 interface ISearchTaskForm {
-    onSearchInput: (query: string) => void;
+    setSearchQuery: (query: string) => void;
+    searchQuery: string
 }
 
 export const SearchTaskForm = (props: ISearchTaskForm) => {
     const {
-        onSearchInput
+        setSearchQuery,
+        searchQuery
     } = props;
     return (
         <form className="todo__form" onSubmit={e => e.preventDefault()}>
@@ -15,7 +17,8 @@ export const SearchTaskForm = (props: ISearchTaskForm) => {
                 label="Search task"
                 id="search-task"
                 type="search"
-                onInput= {onSearchInput}
+                value= {searchQuery}
+                onInput= {setSearchQuery}
             />
         </form>
     )

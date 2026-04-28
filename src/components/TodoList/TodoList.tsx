@@ -7,6 +7,7 @@ export interface ITask {
 }
 
 interface ITodoList {
+    filteredTasks: ITask[] | null;
     tasks: ITask[];
     onDeleteTaskButtonClick: (id: string) => void;
     onTaskCompleteChange: (id: string) => void;
@@ -15,21 +16,27 @@ interface ITodoList {
 export const TodoList = (props: ITodoList) => {
 
     const { 
+        filteredTasks,
         tasks,
         onDeleteTaskButtonClick,
         onTaskCompleteChange
     } = props
     
-    const hasTask = true;
+    const hasTask = tasks.length > 0;
+    const isEmptyFilteredTasks = filteredTasks?.length === 0;
 
     if(!hasTask){
-        return <div className="todo__empty-message"></div>
+        return <div className="todo__empty-message">There are no tasks yet</div>
+    }
+
+    if(hasTask && isEmptyFilteredTasks){
+        return <div className="todo__empty-message">Not found</div>
     }
     
     return (
         <ul className="todo__list">
             {
-                tasks.map((task: ITask) => {
+                (filteredTasks ?? tasks).map((task: ITask) => {
                     return (
                         <TodoItem 
                             key={task.id}

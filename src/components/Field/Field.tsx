@@ -5,7 +5,7 @@ interface IField {
   className?: string,
   type?: "text" | "search";
   onInput?: (query: string) => void;
-  value: string
+  value?: string;
 }
 
 export const Field = (props: IField) => {
