@@ -1,9 +1,11 @@
+import type { RefObject } from "react";
 import type { ITask } from "../TodoList/TodoList";
 
 interface ITodoItem extends ITask{
   className: string;
   onDeleteTaskButtonClick: (id: string) => void;
   onTaskCompleteChange: (id: string) => void;
+  ref: RefObject<HTMLLIElement | null> | null
 }
 
 export const TodoItem = (props: ITodoItem) => {
@@ -13,11 +15,12 @@ export const TodoItem = (props: ITodoItem) => {
     title,
     isDone,
     onDeleteTaskButtonClick,
-    onTaskCompleteChange
+    onTaskCompleteChange,
+    ref
   } = props;
 
   return (
-      <li className={`${className} todo-item`}>
+      <li className={`${className} todo-item`} ref={ref}>
         <input
           className="todo-item__checkbox"
           id={id}

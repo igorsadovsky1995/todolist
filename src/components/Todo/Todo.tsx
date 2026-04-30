@@ -1,9 +1,10 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef, type RefObject } from "react"
 import { AddTaskForm } from "../AddTaskForm/AddTaskForm"
 import { SearchTaskForm } from "../SearchTaskForm/SearchTaskForm"
 import { TodoInfo } from "../TodoInfo/TodoInfo"
 import { TodoList } from "../TodoList/TodoList"
 import type { ITask } from "../TodoList/TodoList"
+import { Button } from "../Button/Button"
 
 export const Todo = () => {
 
@@ -29,8 +30,12 @@ export const Todo = () => {
     })
     
     const [searchQuery, setSearchQuery] = useState<string>('')
-
     const [newTaskTitle, setNewTaskTitle] = useState('')
+
+    const newTaskInputRef = useRef<HTMLInputElement>(null)
+    const firstIncompleteTaskRef = useRef<HTMLLIElement>(null)
+    
+    const firstIncompleteTaskID = tasks.find(task => task.isDone)?.id
 
     const deleteAllTasks = () => {
         const isConfirmed = confirm('Are you sure?')
@@ -55,7 +60,7 @@ export const Todo = () => {
     }
 
     const addTask = () => {
-        if(newTaskTitle.trim().length > 0){
+        if(newTaskTitle && newTaskTitle.trim().length > 0){
             const newTask: ITask = {
                 id: crypto?.randomUUID() ?? Date.now().toString,
                 title: newTaskTitle,
@@ -69,12 +74,17 @@ export const Todo = () => {
 
             setNewTaskTitle("");
             setSearchQuery("");
+            newTaskInputRef.current?.focus();
         }
     }
 
     useEffect(() => {
         localStorage.setItem('tasks', JSON.stringify(tasks))
     }, [tasks])
+
+    useEffect(() => {
+        newTaskInputRef.current?.focus()
+    }, [])
 
     const clearSearchQuery = searchQuery.trim().toLocaleLowerCase();
 
@@ -87,6 +97,7 @@ export const Todo = () => {
             <h1 className="todo__title">To Do List</h1>
             <AddTaskForm 
                 addTask= {addTask}
+                newTaskInputRef= {newTaskInputRef}
                 newTaskTitle= {newTaskTitle}
                 setNewTaskTitle= {setNewTaskTitle}
             />
@@ -99,11 +110,19 @@ export const Todo = () => {
                 done={tasks.filter(el=>el.isDone).length}
                 onDeleteAllButtonClick = {deleteAllTasks}
             />
+            <Button 
+                type="button"
+                onClick= {() => firstIncompleteTaskRef.current?.scrollIntoView({behavior:'smooth'})}
+            >
+                First incomplete task
+            </Button>
             <TodoList 
                 filteredTasks= {filteredTasks}
                 tasks= {tasks}
                 onDeleteTaskButtonClick= {deleteTask} 
                 onTaskCompleteChange= {toggleIsComplete}
+                firstIncompleteTaskRef= {firstIncompleteTaskRef}
+                firstIncompleteTaskID = {firstIncompleteTaskID}
             />
         </div>
     )

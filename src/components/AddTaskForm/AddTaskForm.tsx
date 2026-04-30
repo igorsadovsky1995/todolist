@@ -1,3 +1,4 @@
+import type { RefObject } from "react";
 import { Button } from "../Button/Button"
 import { Field } from "../Field/Field"
 
@@ -5,6 +6,7 @@ interface IAddTaskForm {
     addTask: () => void;
     newTaskTitle: string;
     setNewTaskTitle: (value: string) => void
+    newTaskInputRef: RefObject<HTMLInputElement | null>
 }
 
 export const AddTaskForm = (props: IAddTaskForm) => {
@@ -12,7 +14,8 @@ export const AddTaskForm = (props: IAddTaskForm) => {
     const {
         addTask,
         newTaskTitle,
-        setNewTaskTitle
+        setNewTaskTitle,
+        newTaskInputRef
     } = props;
 
     const onSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
@@ -28,6 +31,7 @@ export const AddTaskForm = (props: IAddTaskForm) => {
                 label="New task title"
                 value= {newTaskTitle}
                 onInput= {setNewTaskTitle}
+                ref= {newTaskInputRef}
             />
             <Button
                 type="submit"

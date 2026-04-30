@@ -1,3 +1,4 @@
+import type { RefObject } from "react";
 import { TodoItem } from "../TodoItem/TodoItem"
 
 export interface ITask {
@@ -11,6 +12,8 @@ interface ITodoList {
     tasks: ITask[];
     onDeleteTaskButtonClick: (id: string) => void;
     onTaskCompleteChange: (id: string) => void;
+    firstIncompleteTaskID?: string;
+    firstIncompleteTaskRef: RefObject<HTMLLIElement | null>;
 }
 
 export const TodoList = (props: ITodoList) => {
@@ -19,7 +22,9 @@ export const TodoList = (props: ITodoList) => {
         filteredTasks,
         tasks,
         onDeleteTaskButtonClick,
-        onTaskCompleteChange
+        onTaskCompleteChange,
+        firstIncompleteTaskID,
+        firstIncompleteTaskRef
     } = props
     
     const hasTask = tasks.length > 0;
@@ -43,6 +48,7 @@ export const TodoList = (props: ITodoList) => {
                             className="todo__item"
                             onDeleteTaskButtonClick= {onDeleteTaskButtonClick}
                             onTaskCompleteChange= {onTaskCompleteChange}
+                            ref= {firstIncompleteTaskID === task.id ? firstIncompleteTaskRef:null}
                             {...task}
                         />
                     )

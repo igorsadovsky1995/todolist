@@ -1,3 +1,4 @@
+import type { RefObject } from "react";
 
 interface IField {
   id: string,
@@ -6,6 +7,7 @@ interface IField {
   type?: "text" | "search";
   onInput?: (query: string) => void;
   value?: string;
+  ref?: RefObject<HTMLInputElement | null> 
 }
 
 export const Field = (props: IField) => {
@@ -15,7 +17,8 @@ export const Field = (props: IField) => {
     label,
     type = "text",
     onInput,
-    value
+    value,
+    ref
   } = props;
 
   return(
@@ -34,6 +37,7 @@ export const Field = (props: IField) => {
           type={type}
           value={value}
           onInput={(e) => onInput?.(e.currentTarget.value)}
+          ref= {ref}
         />
       </div>
   )
