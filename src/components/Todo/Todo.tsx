@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, type RefObject } from "react"
+import { useState, useEffect, useRef } from "react"
 import { AddTaskForm } from "../AddTaskForm/AddTaskForm"
 import { SearchTaskForm } from "../SearchTaskForm/SearchTaskForm"
 import { TodoInfo } from "../TodoInfo/TodoInfo"
