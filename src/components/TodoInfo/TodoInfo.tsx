@@ -1,10 +1,12 @@
+import { memo } from "react"
+
 interface ITodoInfo {
     total: number,
     done: number,
     onDeleteAllButtonClick: () => void
 }
 
-export const TodoInfo = (props: ITodoInfo) => {
+const TodoInfo = (props: ITodoInfo) => {
     const {
         total,
         done,
@@ -22,10 +24,13 @@ export const TodoInfo = (props: ITodoInfo) => {
                 <button  
                     className="todo__delete-all-button" 
                     type="button"
-                    onClick={onDeleteAllButtonClick}>
+                    onClick={onDeleteAllButtonClick}
+                >
                         Delete all
                 </button>)
             }
         </div>
     )
 }
+
+export default memo(TodoInfo)

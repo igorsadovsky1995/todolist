@@ -1,5 +1,6 @@
 import type { RefObject } from "react";
 import type { ITask } from "../TodoList/TodoList";
+import { memo } from "react";
 
 interface ITodoItem extends ITask{
   className: string;
@@ -8,7 +9,7 @@ interface ITodoItem extends ITask{
   ref: RefObject<HTMLLIElement | null> | null
 }
 
-export const TodoItem = (props: ITodoItem) => {
+const TodoItem = (props: ITodoItem) => {
   const {
     className,
     id,
@@ -59,3 +60,5 @@ export const TodoItem = (props: ITodoItem) => {
       </li>
   )
 }
+
+export default memo(TodoItem);

@@ -1,5 +1,6 @@
 import type { RefObject } from "react";
-import { TodoItem } from "../TodoItem/TodoItem"
+import { memo } from "react";
+import TodoItem from "../TodoItem/TodoItem"
 
 export interface ITask {
     id: string;
@@ -16,7 +17,7 @@ interface ITodoList {
     firstIncompleteTaskRef: RefObject<HTMLLIElement | null>;
 }
 
-export const TodoList = (props: ITodoList) => {
+const TodoList = (props: ITodoList) => {
 
     const { 
         filteredTasks,
@@ -59,3 +60,5 @@ export const TodoList = (props: ITodoList) => {
     )
     
 }
+
+export default memo(TodoList);
