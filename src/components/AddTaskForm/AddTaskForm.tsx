@@ -1,22 +1,16 @@
-import type { RefObject } from "react";
+import { useContext, type RefObject } from "react";
 import { Button } from "../Button/Button"
 import { Field } from "../Field/Field"
+import { TasksContext } from "../../context/TasksContext";
 
-interface IAddTaskForm {
-    addTask: () => void;
-    newTaskTitle: string;
-    setNewTaskTitle: (value: string) => void
-    newTaskInputRef: RefObject<HTMLInputElement | null>
-}
-
-export const AddTaskForm = (props: IAddTaskForm) => {
+export const AddTaskForm = () => {
 
     const {
         addTask,
         newTaskTitle,
         setNewTaskTitle,
         newTaskInputRef
-    } = props;
+    } = useContext(TasksContext);
 
     const onSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
         e.preventDefault();

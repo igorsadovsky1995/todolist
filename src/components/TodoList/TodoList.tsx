@@ -1,6 +1,8 @@
 import type { RefObject } from "react";
 import { memo } from "react";
 import TodoItem from "../TodoItem/TodoItem"
+import { useContext } from "react";
+import { TasksContext } from "../../context/TasksContext";
 
 export interface ITask {
     id: string;
@@ -8,25 +10,16 @@ export interface ITask {
     isDone: boolean;
 }
 
-interface ITodoList {
-    filteredTasks: ITask[] | null;
-    tasks: ITask[];
-    onDeleteTaskButtonClick: (id: string) => void;
-    onTaskCompleteChange: (id: string) => void;
-    firstIncompleteTaskID?: string;
-    firstIncompleteTaskRef: RefObject<HTMLLIElement | null>;
-}
-
-const TodoList = (props: ITodoList) => {
+const TodoList = () => {
 
     const { 
         filteredTasks,
         tasks,
-        onDeleteTaskButtonClick,
-        onTaskCompleteChange,
+        deleteTask,
+        toggleIsComplete,
         firstIncompleteTaskID,
         firstIncompleteTaskRef
-    } = props
+    } = useContext(TasksContext)
     
     const hasTask = tasks.length > 0;
     const isEmptyFilteredTasks = filteredTasks?.length === 0;
@@ -47,9 +40,6 @@ const TodoList = (props: ITodoList) => {
                         <TodoItem 
                             key={task.id}
                             className="todo__item"
-                            onDeleteTaskButtonClick= {onDeleteTaskButtonClick}
-                            onTaskCompleteChange= {onTaskCompleteChange}
-                            ref= {firstIncompleteTaskID === task.id ? firstIncompleteTaskRef:null}
                             {...task}
                         />
                     )

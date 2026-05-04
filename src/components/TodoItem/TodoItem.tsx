@@ -1,12 +1,10 @@
 import type { RefObject } from "react";
 import type { ITask } from "../TodoList/TodoList";
-import { memo } from "react";
+import { memo, useContext } from "react";
+import { TasksContext } from "../../context/TasksContext";
 
 interface ITodoItem extends ITask{
   className: string;
-  onDeleteTaskButtonClick: (id: string) => void;
-  onTaskCompleteChange: (id: string) => void;
-  ref: RefObject<HTMLLIElement | null> | null
 }
 
 const TodoItem = (props: ITodoItem) => {
@@ -15,19 +13,23 @@ const TodoItem = (props: ITodoItem) => {
     id,
     title,
     isDone,
-    onDeleteTaskButtonClick,
-    onTaskCompleteChange,
-    ref
   } = props;
 
+  const { 
+    deleteTask,
+    toggleIsComplete,
+    firstIncompleteTaskID,
+    firstIncompleteTaskRef
+  } = useContext(TasksContext)
+
   return (
-      <li className={`${className} todo-item`} ref={ref}>
+      <li className={`${className} todo-item`} ref={firstIncompleteTaskID === id ? firstIncompleteTaskRef:null}>
         <input
           className="todo-item__checkbox"
           id={id}
           type="checkbox"
           checked={isDone}
-          onChange={() => onTaskCompleteChange(id)}
+          onChange={() => toggleIsComplete(id)}
         />
         <label
           className="todo-item__label"
@@ -39,7 +41,7 @@ const TodoItem = (props: ITodoItem) => {
           className="todo-item__delete-button"
           aria-label="Delete"
           title="Delete"
-          onClick={() => onDeleteTaskButtonClick(id)}
+          onClick={() => deleteTask(id)}
         >
           <svg
             width="20"
