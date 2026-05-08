@@ -5,7 +5,8 @@ interface IButton {
     className?: string,
     type: "button" | "submit" | "reset",
     children: ReactNode;
-    onClick?: () => void
+    onClick?: () => void;
+    isDisabled: boolean
 }
 
 export const Button = (props: IButton) => {
@@ -13,7 +14,8 @@ export const Button = (props: IButton) => {
         className = "",
         type= "button",
         children,
-        onClick
+        onClick,
+        isDisabled
     } = props;
 
     return (
@@ -21,6 +23,7 @@ export const Button = (props: IButton) => {
             className={`button ${className}`} 
             type={type}
             onClick={onClick}
+            disabled= {isDisabled}
         >
             {children}
         </button>

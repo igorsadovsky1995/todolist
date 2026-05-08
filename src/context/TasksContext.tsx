@@ -5,7 +5,7 @@ import { useIncompleteTaskScroll } from "../hooks/useIncompleteTaskScroll";
 
 interface ITasksContext {
     tasks: ITask[];
-    addTask: () => void;
+    addTask: (clearTaskTitle: string) => void;
     deleteAllTasks: () => void;
     deleteTask: (id: string) => void
     filteredTasks: ITask[] | null;

@@ -5,9 +5,10 @@ interface IField {
   label: string,
   className?: string,
   type?: "text" | "search";
-  onInput?: (query: string) => void;
+  onInput?: (e: React.InputEvent<HTMLInputElement>) => void;
   value?: string;
-  ref?: RefObject<HTMLInputElement | null> 
+  ref?: RefObject<HTMLInputElement | null>;
+  error: string;
 }
 
 export const Field = (props: IField) => {
@@ -18,7 +19,8 @@ export const Field = (props: IField) => {
     type = "text",
     onInput,
     value,
-    ref
+    ref,
+    error
   } = props;
 
   return(
@@ -30,15 +32,25 @@ export const Field = (props: IField) => {
           {label}
         </label>
         <input
-          className="field__input"
+          className={`field__input ${error ? "is-invalid":""}`}
           id={id}
           placeholder=" "
           autoComplete="off"
           type={type}
           value={value}
-          onInput={(e) => onInput?.(e.currentTarget.value)}
+          onInput={onInput}
           ref= {ref}
         />
+        {
+          error && (
+            <span 
+              className="field__error"
+              title= {error}
+            >
+              {error}
+            </span>
+          )
+        }
       </div>
   )
 }
