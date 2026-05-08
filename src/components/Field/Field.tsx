@@ -8,7 +8,7 @@ interface IField {
   onInput?: (e: React.InputEvent<HTMLInputElement>) => void;
   value?: string;
   ref?: RefObject<HTMLInputElement | null>;
-  error: string;
+  error?: string;
 }
 
 export const Field = (props: IField) => {
