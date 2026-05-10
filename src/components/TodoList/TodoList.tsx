@@ -4,10 +4,13 @@ import TodoItem from "../TodoItem/TodoItem"
 import { useContext } from "react";
 import { TasksContext } from "../../context/TasksContext";
 
-export interface ITask {
-    id: string;
+export interface ITaskCreate {
     title: string;
     isDone: boolean;
+}
+
+export interface ITask extends ITaskCreate {
+    id: string;
 }
 
 const TodoList = () => {
