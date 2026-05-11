@@ -6,7 +6,7 @@ interface IButton {
     type: "button" | "submit" | "reset",
     children: ReactNode;
     onClick?: () => void;
-    isDisabled: boolean
+    isDisabled?: boolean
 }
 
 export const Button = (props: IButton) => {

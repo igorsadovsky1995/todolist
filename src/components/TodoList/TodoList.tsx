@@ -1,4 +1,3 @@
-import type { RefObject } from "react";
 import { memo } from "react";
 import TodoItem from "../TodoItem/TodoItem"
 import { useContext } from "react";
@@ -17,11 +16,7 @@ const TodoList = () => {
 
     const { 
         filteredTasks,
-        tasks,
-        deleteTask,
-        toggleIsComplete,
-        firstIncompleteTaskID,
-        firstIncompleteTaskRef
+        tasks
     } = useContext(TasksContext)
     
     const hasTask = tasks.length > 0;

@@ -2,6 +2,7 @@ import type { RefObject } from "react";
 import type { ITask } from "../TodoList/TodoList";
 import { memo, useContext } from "react";
 import { TasksContext } from "../../context/TasksContext";
+import { RouterLink } from "../RouterLink.tsx/RouterLink";
 
 interface ITodoItem extends ITask{
   className: string;
@@ -32,11 +33,14 @@ const TodoItem = (props: ITodoItem) => {
           onChange={() => toggleIsComplete(id)}
         />
         <label
-          className="todo-item__label"
+          className="todo-item__label visually-hidden"
           htmlFor={id}
         >
           {title}
         </label>
+        <RouterLink to={`/tasks/${id}`} aria-label='Task detail page'>
+          {title}
+        </RouterLink>
         <button
           className="todo-item__delete-button"
           aria-label="Delete"

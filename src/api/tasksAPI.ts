@@ -10,6 +10,15 @@ export const tasksAPI = {
         return fetch(URL)
         .then(res => res.json())
     },
+    getByID: (id: string) => {
+        return fetch(`${URL}/${id}`)
+        .then(res => {
+            if(!res.ok){
+                throw new Error (`Error: ${res.status} `) 
+            }
+            return res.json()
+        })
+    },
     add: (newTask: ITaskCreate) => {
         return fetch(URL, {
             method: "POST",
