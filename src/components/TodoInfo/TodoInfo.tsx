@@ -1,7 +1,13 @@
 import { memo, useContext, useMemo } from "react"
 import { TasksContext } from "../../context/TasksContext";
+import type { ICSSModule } from "../Todo/Todo";
 
-const TodoInfo = () => {
+const TodoInfo = (props: ICSSModule) => {
+
+    const {
+        styles
+    } = props;
+
     const {
         tasks,
         deleteAllTasks,
@@ -16,13 +22,13 @@ const TodoInfo = () => {
     }, [tasks ]);
 
     return (
-        <div className="todo__info">
-            <div className="todo__total-tasks">
+        <div className={styles.info}>
+            <div>
                 Done {done} from {total}
             </div>
             {hasTask && (
                 <button  
-                    className="todo__delete-all-button" 
+                    className={styles.deleteAllButton}
                     type="button"
                     onClick={deleteAllTasks}
                 >

@@ -1,8 +1,14 @@
 import { useContext } from "react";
 import { Field } from "../Field/Field"
 import { TasksContext } from "../../context/TasksContext";
+import type { ICSSModule } from "../Todo/Todo";
 
-export const SearchTaskForm = () => {
+export const SearchTaskForm = (props: ICSSModule) => {
+
+    const {
+        styles
+    } = props;
+
     const {
         setSearchQuery,
         searchQuery
@@ -13,9 +19,9 @@ export const SearchTaskForm = () => {
     } 
 
     return (
-        <form className="todo__form" onSubmit={e => e.preventDefault()}>
+        <form className={styles.form} onSubmit={e => e.preventDefault()}>
             <Field 
-                className="todo__field"
+                className={styles.field}
                 label="Search task"
                 id="search-task"
                 type="search"

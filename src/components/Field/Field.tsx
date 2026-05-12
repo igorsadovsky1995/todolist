@@ -1,4 +1,5 @@
 import type { RefObject } from "react";
+import styles from './Field.module.scss'
 
 interface IField {
   id: string,
@@ -24,15 +25,15 @@ export const Field = (props: IField) => {
   } = props;
 
   return(
-      <div className={`${className} field`}>
+      <div className={`${styles.field} ${className}`}>
         <label
-          className="field__label"
+          className={styles.label}
           htmlFor={id}
         >
           {label}
         </label>
         <input
-          className={`field__input ${error ? "is-invalid":""}`}
+          className={`${styles.input} ${error ? styles.isInvalid : ""}`}
           id={id}
           placeholder=" "
           autoComplete="off"
@@ -44,7 +45,7 @@ export const Field = (props: IField) => {
         {
           error && (
             <span 
-              className="field__error"
+              className={styles.error}
               title= {error}
             >
               {error}

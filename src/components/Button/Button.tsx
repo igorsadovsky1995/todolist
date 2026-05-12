@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import styles from './Button.module.scss'
 
 
 interface IButton {
@@ -20,7 +21,7 @@ export const Button = (props: IButton) => {
 
     return (
         <button 
-            className={`button ${className}`} 
+            className={`${styles.button} ${className}`} 
             type={type}
             onClick={onClick}
             disabled= {isDisabled}

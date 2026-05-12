@@ -2,8 +2,14 @@ import { useContext, useState } from "react";
 import { Button } from "../Button/Button"
 import { Field } from "../Field/Field"
 import { TasksContext } from "../../context/TasksContext";
+import type { ICSSModule } from "../Todo/Todo";
 
-export const AddTaskForm = () => {
+
+export const AddTaskForm = (props: ICSSModule) => {
+
+    const {
+        styles
+    } = props;
 
     const {
         addTask,
@@ -36,9 +42,9 @@ export const AddTaskForm = () => {
     }
 
     return (
-        <form className="todo__form" onSubmit={onSubmit}>
+        <form className={styles.form} onSubmit={onSubmit}>
             <Field 
-                className="todo__field" 
+                className={styles.field}
                 id="new-task"
                 label="New task title"
                 value= {newTaskTitle}

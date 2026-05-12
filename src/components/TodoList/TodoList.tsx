@@ -2,6 +2,7 @@ import { memo } from "react";
 import TodoItem from "../TodoItem/TodoItem"
 import { useContext } from "react";
 import { TasksContext } from "../../context/TasksContext";
+import type { ICSSModule } from "../Todo/Todo";
 
 export interface ITaskCreate {
     title: string;
@@ -12,7 +13,11 @@ export interface ITask extends ITaskCreate {
     id: string;
 }
 
-const TodoList = () => {
+const TodoList = (props: ICSSModule) => {
+
+    const {
+        styles
+    } = props;
 
     const { 
         filteredTasks,
@@ -23,21 +28,21 @@ const TodoList = () => {
     const isEmptyFilteredTasks = filteredTasks?.length === 0;
 
     if(!hasTask){
-        return <div className="todo__empty-message">There are no tasks yet</div>
+        return <div className={styles.emptyMessage}>There are no tasks yet</div>
     }
 
     if(hasTask && isEmptyFilteredTasks){
-        return <div className="todo__empty-message">Not found</div>
+        return <div className={styles.emptyMessage}>Not found</div>
     }
     
     return (
-        <ul className="todo__list">
+        <ul className={styles.list}>
             {
                 (filteredTasks ?? tasks).map((task: ITask) => {
                     return (
                         <TodoItem 
                             key={task.id}
-                            className="todo__item"
+                            className={styles.item}
                             {...task}
                         />
                     )
