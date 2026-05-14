@@ -20,11 +20,19 @@ const TodoItem = (props: ITodoItem) => {
     deleteTask,
     toggleIsComplete,
     firstIncompleteTaskID,
-    firstIncompleteTaskRef
+    firstIncompleteTaskRef,
+    disappearingTaskID,
+    appearingTaskID
   } = useContext(TasksContext)
-
+  
   return (
-      <li className={`${styles.todoItem} ${className}`} ref={firstIncompleteTaskID === id ? firstIncompleteTaskRef:null}>
+      <li 
+        className={`
+          ${styles.todoItem} ${disappearingTaskID === id ? styles.isDisappearing : ''}
+          ${appearingTaskID === id ? styles.isAppearing : ''}
+        `} 
+        ref={firstIncompleteTaskID === id ? firstIncompleteTaskRef:null}
+      >
         <input
           className={styles.checkbox}
           id={id}

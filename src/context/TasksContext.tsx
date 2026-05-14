@@ -17,6 +17,8 @@ interface ITasksContext {
     setNewTaskTitle: (value: string) => void;
     setSearchQuery: (query: string) => void;
     searchQuery: string;
+    disappearingTaskID: string | null;
+    appearingTaskID: string | null;
 }
 
 interface ITasksProvider {
@@ -41,7 +43,9 @@ export const TasksProvider = (props: ITasksProvider) => {
         searchQuery,
         newTaskInputRef, 
         newTaskTitle, 
-        setNewTaskTitle
+        setNewTaskTitle,
+        disappearingTaskID,
+        appearingTaskID
     } = useTasks();
 
     const {
@@ -63,7 +67,9 @@ export const TasksProvider = (props: ITasksProvider) => {
             searchQuery,
             newTaskInputRef, 
             newTaskTitle, 
-            setNewTaskTitle
+            setNewTaskTitle,
+            disappearingTaskID,
+            appearingTaskID
         }}>
             {children}
         </TasksContext.Provider>
